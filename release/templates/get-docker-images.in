@@ -1,0 +1,24 @@
+#!/bin/bash -eu
+# Copyright London Stock Exchange Group All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# This script pulls docker images from the Dockerhub hyperledger repositories
+
+# set the default Docker namespace and tag
+DOCKER_NS=_NS_
+ARCH=_ARCH_
+VERSION=_VERSION_
+BASE_DOCKER_TAG=_BASE_DOCKER_TAG_
+
+# set of Hyperledger mchain images
+FABRIC_IMAGES=(mchain-peer mchain-orderer mchain-ccenv mchain-javaenv mchain-kafka mchain-zookeeper \
+mchain-couchdb mchain-tools)
+
+for image in ${FABRIC_IMAGES[@]}; do
+  echo "Pulling ${DOCKER_NS}/$image:${ARCH}-${VERSION}"
+  docker pull ${DOCKER_NS}/$image:${ARCH}-${VERSION}
+done
+
+echo "Pulling ${DOCKER_NS}/mchain-baseos:${BASE_DOCKER_TAG}"
+docker pull ${DOCKER_NS}/mchain-baseos:${BASE_DOCKER_TAG}
